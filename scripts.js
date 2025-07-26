@@ -19,10 +19,6 @@ const initialTasks = [
     status: "done",
   },
 ];
-// Tasks [title and status] to be stored as objects in an array in the console
-console.log(`All tasks stored here: 🏆`, initialTasks);
-
-//--------------------------------------------------------------------------------------------
 // Function that handels task creation
 // to track if the user has already run the task creation process
 let hasAttemptedTaskCreation = false;
@@ -60,15 +56,14 @@ function addNewTask(title, description, status) {
   //maps an array of all the ID's
   const arrayOfIds = initialTasks.map((obj) => obj.id);
   //Finds the higest number in the map
-  const HighestNum = Math.max(...arrayOfIds);
-  const highestId = HighestNum;
+  const highestId = initialTasks.length > 0 ? Math.max(...arrayOfIds) : 0;
   // ------------- //
   // new task object with the incremeneted ID
   const newTask = {
     id: highestId + 1,
-    title: title,
-    description: description,
-    status: status,
+    title,
+    description,
+    status,
   };
   initialTasks.push(newTask);
 }
@@ -76,10 +71,14 @@ function addNewTask(title, description, status) {
 
 // Filter the intialTask array to get only the status of "done"
 const completeTasks = initialTasks.filter((task) => task.status === "done");
-console.log(`Completed tasks:✅`, completeTasks);
-//----------------------------------------------------------------------------
 // Event listener setup
 const addTaskButton = document.getElementById("add-task-btn");
 // Add a click event listener to the button.
 // This will run the taskCreation function every time the button is clicked
 addTaskButton.addEventListener("click", taskCreation);
+// -------------------------------------------------------------------------------
+/*  Log current state of the Board
+---------------------------------------------------------------------------- */
+console.log("--- Task Board State Updated ---");
+console.log(`Completed Tasks: ✅`, completeTasks);
+console.log(`All tasks stored here:🏆`, initialTasks);
